@@ -1,24 +1,19 @@
 package store.mvc.utility;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileReaderUtil {
 
     public static String readFile(String filePath) {
-        StringBuilder content = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line.strip()).append(System.lineSeparator()); // 줄바꿈 추가
-            }
+        try {
+            return Files.readString(Paths.get(filePath)) // 파일 한번에 읽기
+                    .replace("\r\n", "\n"); // 모든 CRLF 줄바꿈을 LF로 표준화
         } catch (IOException e) {
-            System.out.println("[ERROR] 파일을 읽는 도중 오류가 발생했습니다.");
-            e.printStackTrace();
+            // IOException 처리: 파일을 읽을 수 없는 경우
+            System.err.println("Error reading file: " + e.getMessage());
+            return null;
         }
-
-        return content.toString().replaceAll("\\r\\n", "\n");
     }
 }
