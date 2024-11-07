@@ -1,4 +1,4 @@
-package store.mvc.utility;
+package store.global.utility;
 
 import java.io.IOException;
 import java.nio.file.Files;

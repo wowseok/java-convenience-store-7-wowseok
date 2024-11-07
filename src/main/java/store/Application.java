@@ -1,8 +1,8 @@
 package store;
 
-import store.mvc.controller.Maincontroller;
-import store.mvc.view.InputView;
-import store.mvc.view.OutputView;
+import store.global.Maincontroller;
+import store.view.InputView;
+import store.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {

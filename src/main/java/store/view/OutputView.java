@@ -1,6 +1,6 @@
-package store.mvc.view;
+package store.view;
 
-import store.mvc.utility.FileReaderUtil;
+import store.global.utility.FileReaderUtil;
 
 
 public class OutputView {

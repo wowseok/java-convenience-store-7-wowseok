@@ -1,7 +1,7 @@
-package store.mvc.controller;
+package store.global;
 
-import store.mvc.view.InputView;
-import store.mvc.view.OutputView;
+import store.view.InputView;
+import store.view.OutputView;
 
 public class Maincontroller {
     private final InputView inputView;
