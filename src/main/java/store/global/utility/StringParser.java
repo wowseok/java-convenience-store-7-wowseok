@@ -6,43 +6,55 @@ import java.util.List;
 import java.util.Map;
 
 public class StringParser {
-    public static List<Map<String, String>> parseFileContent(String fileContent) {
+    public static List<Map<String, Object>> parseFileContent(String fileContent) {
         String[] lines = fileContent.split("\n");
         String[] headers = parseHeaders(lines[0]);
-        return parseData(lines, headers);
+        return parseContent(lines, headers);
     }
 
     private static String[] parseHeaders(String headerLine) {
         return headerLine.split(",");
     }
 
-    private static List<Map<String, String>> parseData(String[] lines, String[] headers) {
-        List<Map<String, String>> parsedDataList = new ArrayList<>();
+    private static List<Map<String, Object>> parseContent(String[] lines, String[] headers) {
+        List<Map<String, Object>> content = new ArrayList<>();
         for (int i = 1; i < lines.length; i++) {
-            Map<String, String> parsedData = mapLineToData(lines[i], headers);
-            parsedDataList.add(parsedData);
+            content.add(mapLine(lines[i], headers));
         }
-        return parsedDataList;
+        return content;
     }
 
-    private static Map<String, String> mapLineToData(String line, String[] headers) {
-
+    private static Map<String, Object> mapLine(String line, String[] headers) {
         String[] values = line.split(",");
-        Map<String, String> parsedData = new LinkedHashMap<>();
+        Map<String, Object> mappedLine = new LinkedHashMap<>();
         for (int j = 0; j < headers.length; j++) {
-            parsedData.put(headers[j], getValue(values, j));
+            String header = headers[j];
+            String value = getValue(values, j);
+            Object parsedValue = parseValue(header, value);
+            mappedLine.put(header, parsedValue);
         }
-
-        return parsedData;
+        return mappedLine;
     }
+
 
     private static String getValue(String[] values, int index) {
-        if (values[index].equals("null") || values[index].isEmpty()) {
+        if (index >= values.length) {
             return null;
         }
-        if (index < values.length) {
-            return values[index];
+        String value = values[index];
+        if (value.isEmpty() || value.equalsIgnoreCase("null")) {
+            return null;
         }
-        return null;
+        return value;
+    }
+
+    private static Object parseValue(String header, String value) {
+        if (value == null) {
+            return null;
+        }
+        if ("price".equals(header) || "quantity".equals(header)) {
+            return Integer.parseInt(value);
+        }
+        return value;
     }
 }
