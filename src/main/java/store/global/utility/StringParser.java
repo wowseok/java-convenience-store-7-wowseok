@@ -37,6 +37,9 @@ public class StringParser {
     }
 
     private static String getValue(String[] values, int index) {
+        if (values[index].equals("null") || values[index].isEmpty()) {
+            return null;
+        }
         if (index < values.length) {
             return values[index];
         }
