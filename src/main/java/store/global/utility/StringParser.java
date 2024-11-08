@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class StringParser {
     public static List<Map<String, Object>> parseFileContent(String fileContent) {
+
         String[] lines = fileContent.split("\n");
         String[] headers = parseHeaders(lines[0]);
         return parseContent(lines, headers);
@@ -42,7 +43,7 @@ public class StringParser {
             return null;
         }
         String value = values[index];
-        if (value.isEmpty() || value.equalsIgnoreCase("null")) {
+        if (value.isEmpty() || value.equals("null")) {
             return null;
         }
         return value;

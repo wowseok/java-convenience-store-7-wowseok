@@ -8,9 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.product.Product;
-import store.product.ProductFactory;
+import store.product.ProductProvider;
 
-class ProductFactoryTest {
+class ProductProviderTest {
+
+
+    ProductProvider productProvider = ProductProvider.getInstance();
 
     @Test
     @DisplayName("동일한 이름, 가격, 프로모션의 객체는 재사용됨")
@@ -21,8 +24,8 @@ class ProductFactoryTest {
         String promotion = "탄산2+1";
 
         // When
-        Product product1 = ProductFactory.createProduct(name, price, promotion);
-        Product product2 = ProductFactory.createProduct(name, price, promotion);
+        Product product1 = productProvider.createProduct(name, price, promotion);
+        Product product2 = productProvider.createProduct(name, price, promotion);
 
         // Then
         assertSame(product1, product2, "동일한 이름, 가격, 프로모션의 객체는 동일한 인스턴스를 참조해야 함");
@@ -38,8 +41,8 @@ class ProductFactoryTest {
         String promotion2 = "탄산3+1";
 
         // When
-        Product product1 = ProductFactory.createProduct(name, price, promotion1);
-        Product product2 = ProductFactory.createProduct(name, price, promotion2);
+        Product product1 = productProvider.createProduct(name, price, promotion1);
+        Product product2 = productProvider.createProduct(name, price, promotion2);
 
         // Then
         assertNotSame(product1, product2, "프로모션이 다르면 서로 다른 객체여야 함");
@@ -56,9 +59,9 @@ class ProductFactoryTest {
         String promotion = "탄산2+1";
 
         // When
-        Product product1 = ProductFactory.createProduct(name1, price1, promotion);
-        Product product2 = ProductFactory.createProduct(name2, price1, promotion);
-        Product product3 = ProductFactory.createProduct(name1, price2, promotion);
+        Product product1 = productProvider.createProduct(name1, price1, promotion);
+        Product product2 = productProvider.createProduct(name2, price1, promotion);
+        Product product3 = productProvider.createProduct(name1, price2, promotion);
 
         // Then
         assertNotSame(product1, product2, "이름이 다르면 다른 객체여야 함");
@@ -73,8 +76,8 @@ class ProductFactoryTest {
         int price = 1000;
 
         // When
-        Product product1 = ProductFactory.createProduct(name, price, null);
-        Product product2 = ProductFactory.createProduct(name, price, "null");
+        Product product1 = productProvider.createProduct(name, price, null);
+        Product product2 = productProvider.createProduct(name, price, "null");
 
         // Then
         assertSame(product1, product2, "프로모션이 null과 'null' 문자열은 동일하게 처리해야 함");
@@ -86,7 +89,7 @@ class ProductFactoryTest {
     @DisplayName("객체 생성 후 프로모션 변경 가능")
     void testSetPromotion() {
         // Given
-        Product product = ProductFactory.createProduct("콜라", 1000, "탄산2+1");
+        Product product = productProvider.createProduct("콜라", 1000, "탄산2+1");
 
         // When
         product.setPromotion("새로운 프로모션");
