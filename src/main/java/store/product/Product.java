@@ -1,14 +1,20 @@
 package store.product;
 
-import java.util.HashMap;
-import java.util.Map;
+
+/**
+ * Product 클래스는 플라이웨이트 패턴의 내부 상태를 가진 객체입니다.
+ * - 내부 상태: 공유 가능한 데이터 (name, price).
+ * - 프로모션(promotion)은 내부 상태로 포함되며, 동적으로 변경 가능합니다.
+ * <p>
+ * 플라이웨이트 패턴의 의도:
+ * - 동일한 name, price 값을 가진 객체는 재사용되며, 프로모션 상태는 변경 가능합니다.
+ */
 
 public class Product {
-    private static final Map<String, Product> existingProducts = new HashMap<>();
     private final String name;
     private final int price;
 
-    // 외부 상태는 개별적으로 관리됨 (프로모션 변경 가능)
+    // (프로모션 변경 가능)
     private String promotion;
 
     // Private 생성자
@@ -18,7 +24,7 @@ public class Product {
         this.promotion = promotion;
     }
 
-    // 프로모션은 외부에서 변경 가능
+
     public void setPromotion(String promotion) {
         this.promotion = promotion;
     }
