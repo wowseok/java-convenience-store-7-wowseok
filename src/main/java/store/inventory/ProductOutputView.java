@@ -4,7 +4,7 @@ import java.util.Map;
 import store.product.Product;
 import store.product.ProductFormatter;
 
-public class ProductView {
+public class ProductOutputView {
 
     public static void displayProducts() {
         Inventory inventory = Inventory.getInstance(); // Singleton 인스턴스 가져오기
@@ -15,7 +15,9 @@ public class ProductView {
             int quantity = entry.getValue();
             // 포맷팅된 데이터를 출력
             System.out.println(formatProduct(product, quantity));
+
         }
+        System.out.println();
     }
 
     private static String formatProduct(Product product, int quantity) {

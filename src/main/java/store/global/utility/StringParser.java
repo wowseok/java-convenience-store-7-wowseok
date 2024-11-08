@@ -6,38 +6,59 @@ import java.util.List;
 import java.util.Map;
 
 public class StringParser {
-    public static List<Map<String, Object>> parseFileContent(String fileContent) {
 
+
+    public static List<Map<String, String>> parse(String fileContent) {
         String[] lines = fileContent.split("\n");
         String[] headers = parseHeaders(lines[0]);
         return parseContent(lines, headers);
     }
 
     private static String[] parseHeaders(String headerLine) {
-        return headerLine.split(",");
+        return headerLine.split(",", -1);
     }
 
-    private static List<Map<String, Object>> parseContent(String[] lines, String[] headers) {
-        List<Map<String, Object>> content = new ArrayList<>();
-        for (int i = 1; i < lines.length; i++) {
-            content.add(mapLine(lines[i], headers));
+
+    public static List<Map<String, String>> parseContent(String[] lines, String[] headers) {
+        List<Map<String, String>> content = new ArrayList<>();
+        for (int i = 1; i < lines.length; i++) { // 첫 줄은 헤더이므로 건너뜀
+            Map<String, String> mappedLine = linkHeadersAndValues(headers, lines[i]);
+            content.add(mappedLine);
         }
         return content;
     }
 
-    private static Map<String, Object> mapLine(String line, String[] headers) {
-        String[] values = line.split(",");
-        Map<String, Object> mappedLine = new LinkedHashMap<>();
-        for (int j = 0; j < headers.length; j++) {
-            String header = headers[j];
-            String value = getValue(values, j);
-            Object parsedValue = parseValue(header, value);
-            mappedLine.put(header, parsedValue);
+    private static Map<String, String> linkHeadersAndValues(String[] headers, String line) {
+        String[] values = line.split(",", -1);
+        Map<String, String> mappedLine = new LinkedHashMap<>();
+        for (int i = 0; i < headers.length; i++) {
+            String header = headers[i];
+            String value = convertNull(values[i]);
+            mappedLine.put(header, value);
         }
         return mappedLine;
     }
 
+    // "null" 문자열을 실제 null로 변환
+    private static String convertNull(String value) {
+        if ("null".equalsIgnoreCase(value)) {
+            return null;
+        }
+        return value;
+    }
+/*
+    private static String extractValue(String[] values, int index) {
+        if (index >= values.length) {
+            return null;
+        }
+        String value = values[index];
+        return (value == null || value.isEmpty() || value.equalsIgnoreCase("null")) ? null : value;
+    }
+*/
 
+
+
+/*
     private static String getValue(String[] values, int index) {
         if (index >= values.length) {
             return null;
@@ -58,4 +79,6 @@ public class StringParser {
         }
         return value;
     }
+
+ */
 }

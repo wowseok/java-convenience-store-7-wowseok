@@ -2,6 +2,7 @@ package store.product;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import store.inventory.Inventory;
 
 public class ProductProvider {
     private static final ProductProvider INSTANCE = new ProductProvider();
@@ -15,28 +16,20 @@ public class ProductProvider {
     }
 
     public Product createProduct(String name, int price, String promotion) {
-        // 기본 상품 생성 보장
-        initializeBaseProduct(name, price);
-
-        // 프로모션 상품 생성 또는 반환
+        ensureBaseProductExists(name, price); // 기본 상품 보장
         return getProduct(name, price, promotion);
     }
-
-    private void initializeBaseProduct(String name, int price) {
+    
+    private void ensureBaseProductExists(String name, int price) {
         String baseKey = generateKey(name, price, null);
         if (!existingProducts.containsKey(baseKey)) {
             Product baseProduct = new Product(name, price, null);
             existingProducts.put(baseKey, baseProduct);
+
+            // 기본 상품을 Inventory에 추가
+            Inventory.getInstance().add(baseProduct, 0);
         }
     }
-
-    // 기본 상품 조회 메서드 추가
-    public Product getBaseProduct(String name, int price) {
-        initializeBaseProduct(name, price);
-        String baseKey = generateKey(name, price, null);
-        return existingProducts.get(baseKey);
-    }
-
 
     private Product getProduct(String name, int price, String promotion) {
         String key = generateKey(name, price, promotion);

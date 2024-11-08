@@ -8,6 +8,7 @@ import store.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         Maincontroller maincontroller = new Maincontroller(new InputView(), new OutputView());
-        maincontroller.run(new ProductManager());
+        ProductManager productManager = new ProductManager();
+        maincontroller.run(productManager);
     }
 }
