@@ -1,5 +1,11 @@
 package store.global;
 
+import java.util.List;
+import java.util.Map;
+import store.global.utility.FileReaderUtil;
+import store.global.utility.StringParser;
+import store.inventory.ProductView;
+import store.product.ProductManager;
 import store.view.InputView;
 import store.view.OutputView;
 
@@ -12,9 +18,15 @@ public class Maincontroller {
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void run(ProductManager manager) {
         outputView.printWelcomeMessage();
-        outputView.printAvailableProducts();
-        inputView.getUserInput();
+
+        List<Map<String, Object>> data = StringParser.parseFileContent(
+                FileReaderUtil.readFile("src/main/resources/products.md"));
+
+        manager.registerProduct(data);
+        ProductView.displayProducts();
+        //outputView.printAvailableProducts();
+        //inputView.getUserInput();
     }
 }
