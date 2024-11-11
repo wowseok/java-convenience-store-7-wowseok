@@ -51,8 +51,7 @@ public class Maincontroller {
         MembershipService membershipService = new MembershipService();
         Receipt receipt = membershipService.calculateReceipt(orderResults, applyMembership);
         OutputView.displayReceipt(receipt);
-        OutputView.displayInventoryHeader(); // 헤더 출력
-        OutputView.displayProducts(inventory.getProducts()); // 상품 목록 출력
+
 
     }
 

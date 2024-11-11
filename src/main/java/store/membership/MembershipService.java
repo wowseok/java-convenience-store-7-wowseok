@@ -22,9 +22,9 @@ public class MembershipService {
             // 증정받은 수량과 금액이 0인 경우만 할인 대상
             if (order.getExtraGivenQuantity() == 0 && order.getExtraGivenCost() == 0) {
                 discountableAmount += order.getTotalCost();
-            } else {
-                totalDiscountAmount += order.getExtraGivenCost();
+                continue;
             }
+            totalDiscountAmount += order.getExtraGivenCost();
         }
 
         int membershipDiscount = 0;

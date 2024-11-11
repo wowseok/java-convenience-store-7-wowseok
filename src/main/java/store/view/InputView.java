@@ -25,4 +25,8 @@ public class InputView {
         System.out.println("멤버십을 적용하시겠습니까? (Y/N)");
         return Console.readLine();
     }
+
+    public static String getResponse() {
+        return Console.readLine();
+    }
 }

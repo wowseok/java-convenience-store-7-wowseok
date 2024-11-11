@@ -20,11 +20,13 @@ public class DateCalculate {
         // 연도 비교
         if (date1Parts[0] < date2Parts[0]) {
             return true;  // 연도가 더 작으면 이전 날짜
-        } else if (date1Parts[0] == date2Parts[0]) {
+        }
+        if (date1Parts[0] == date2Parts[0]) {
             // 연도가 같으면 월 비교
             if (date1Parts[1] < date2Parts[1]) {
                 return true;  // 월이 더 작으면 이전 날짜
-            } else if (date1Parts[1] == date2Parts[1]) {
+            }
+            if (date1Parts[1] == date2Parts[1]) {
                 // 월이 같으면 일 비교
                 return date1Parts[2] < date2Parts[2];  // 일이 더 작으면 이전 날짜
             }
@@ -40,11 +42,13 @@ public class DateCalculate {
         // 연도 비교
         if (date1Parts[0] > date2Parts[0]) {
             return true;  // 연도가 더 크면 이후 날짜
-        } else if (date1Parts[0] == date2Parts[0]) {
+        }
+        if (date1Parts[0] == date2Parts[0]) {
             // 연도가 같으면 월 비교
             if (date1Parts[1] > date2Parts[1]) {
                 return true;  // 월이 더 크면 이후 날짜
-            } else if (date1Parts[1] == date2Parts[1]) {
+            }
+            if (date1Parts[1] == date2Parts[1]) {
                 // 월이 같으면 일 비교
                 return date1Parts[2] > date2Parts[2];  // 일이 더 크면 이후 날짜
             }
