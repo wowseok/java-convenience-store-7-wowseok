@@ -1,35 +1,21 @@
 package store.product;
 
-
-/**
- * Product 클래스는 플라이웨이트 패턴의 내부 상태를 가진 객체입니다.
- * - 내부 상태: 공유 가능한 데이터 (name, price).
- * - 프로모션(promotion)은 내부 상태로 포함되며, 동적으로 변경 가능합니다.
- * <p>
- * 플라이웨이트 패턴의 의도:
- * - 동일한 name, price 값을 가진 객체는 재사용되며, 프로모션 상태는 변경 가능합니다.
- */
+import java.util.UUID;
 
 public class Product {
     private final String name;
     private final int price;
+    private int quantity;
+    private final String promotion;
+    private final String id;
 
-    // (프로모션 변경 가능)
-    private String promotion;
-
-    // Private 생성자
-    public Product(String name, int price, String promotion) {
+    public Product(String name, int price, int quantity, String promotion) {
+        this.id = UUID.randomUUID().toString(); // UUID로 고유 ID 생성
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
         this.promotion = promotion;
     }
-
-
-    public void setPromotion(String promotion) {
-        this.promotion = promotion;
-    }
-
-    // Getter 메서드들
 
 
     public String getName() {
@@ -40,13 +26,20 @@ public class Product {
         return price;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     public String getPromotion() {
         return promotion;
     }
 
+    public String getId() {
+        return id;
+    }
 
-    public String toString() {
-        return String.format("Product{name='%s', price=%d, promotion='%s'}", name, price, promotion);
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
 
